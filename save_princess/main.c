@@ -26,11 +26,21 @@ void removeCursor(void)
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
+
 int main() {
 	textcolor(YELLOW2, BLACK);
 	removeCursor();
-	gotoxy(8, 20);
-	printf("SAVE THE PRINCESS");
+	gotoxy(0, 0);
+	printf("\n\n\n\n");
+	printf("      ****      *    *        *   \n");
+	printf("     *         * *    *      *      \n");
+	printf("      ****    *****    *    *         \n");
+	printf("          *   *     *    *  *         \n");
+	printf("     ****   *       *    **        \n");
 
+
+	printf("SAVE THE PRINCESS");
+	//StartMenu();
 	return 0;
+	
 }
