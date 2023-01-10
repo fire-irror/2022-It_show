@@ -5,7 +5,7 @@
 void gotoxy(int x, int y);
 
 int main(void) {
-	gotoxy(50, 20);
+	gotoxy(50, 20);		//이동할 좌표
 	printf("A\n");
 	printf("출력되었습니다");
 }
