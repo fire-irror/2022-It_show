@@ -69,7 +69,7 @@ void gotoxy(int x, int y) {
 		CursorView(0);
 		system("COLOR 0F");
 		mainPtr();
-		while (true) {
+		while (1) {
 			if (GetAsyncKeyState(VK_LEFT))
 				if (POS == 0) POS = 3;
 				else POS -= 1;
