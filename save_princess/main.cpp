@@ -2,32 +2,37 @@
 #include <Windows.h>
 #include "console.h"
 
-
+struct Player {
+	int speed;
+	float x, y;
+};
 
 int main() {
 
-	int x = 60, y = 15;
+	struct Player player;
+	player.speed = 600;
+	player.x = 60, player.y = 15;
+
 
 	while (1) {
 
-		Clear();
+		Clear();// TODO: 얘가 0,0으로 이동시키는 걸 막아야한다. 
 
 		if (GetAsyncKeyState(VK_LEFT)) {
-			x--;
+			player.speed* player.x--;
 		}
 
 		else if (GetAsyncKeyState(VK_RIGHT)) {
-			x++;
+			player.speed* player.x++;
 		}
 		else if (GetAsyncKeyState(VK_UP)) {
-			y--;
+			player.speed* player.y--;
 		}
-		
 		else if (GetAsyncKeyState(VK_DOWN)) {
-			y++;
+			player.speed* player.y++;
+
 		}
-			
-		gotoxy(x, y);
+		gotoxy(player.x, player.y);
 		printf("■");
 		Sleep(50);
 	}
