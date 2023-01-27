@@ -10,27 +10,38 @@ struct Player {
 int main() {
 
 	struct Player player;
-	player.speed = 600;
+	player.speed = 600;		//TODO: player_speed해결하기.
 	player.x = 60, player.y = 15;
 
 
 	while (1) {
 
-		Clear();// TODO: 얘가 0,0으로 이동시키는 걸 막아야한다. 
+		Clear();
 
 		if (GetAsyncKeyState(VK_LEFT)) {
-			player.speed* player.x--;
+			player.x--;
+			if (player.x < 0) {
+				player.x = 0;
+			}
 		}
 
 		else if (GetAsyncKeyState(VK_RIGHT)) {
-			player.speed* player.x++;
+			player.x++;
+			if (player.x > 119) {
+				player.x = 119;
+			}
 		}
 		else if (GetAsyncKeyState(VK_UP)) {
-			player.speed* player.y--;
+			player.y--;
+			if (player.y < 0) {
+				player.y = 0;
+			}
 		}
 		else if (GetAsyncKeyState(VK_DOWN)) {
-			player.speed* player.y++;
-
+			 player.y++;
+			 if (player.y > 29) {
+				 player.y = 29;
+			 }
 		}
 		gotoxy(player.x, player.y);
 		printf("■");
