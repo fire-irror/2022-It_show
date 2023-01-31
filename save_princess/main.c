@@ -26,10 +26,11 @@ int main() {
 	player.y = 15;
 	player.life = 3;
 
-	struct Bullet bullet;
+	struct Bullet bullet;	//TODO: bullet 여러발 나가도록 구현.
 	bullet.is_fired = 0;
 	bullet.x = 0;
 	bullet.y = 0;
+
 
 	long start_time = clock();	// 게임 시작 시간
 	long spent_time;			// 게임 진행 시간
@@ -75,7 +76,8 @@ int main() {
 			gotoxy(bullet.x, bullet.y);
 			printf("▲");
 			bullet.y--;
-			if (bullet.y < 0) {
+			if (bullet.y < 0)
+			{
 				bullet.is_fired = 0;
 			}
 		}

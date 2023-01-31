@@ -12,8 +12,5 @@ void SetTitle(char* _szConsoleName);
 void SetColor(unsigned char _BgColor, unsigned char _TextColor);
 //배경, 글자색 변경
 
-void SetCursor(BOOL _bshow);
-//커서 안보이게 하기
-
 void SetConsoleSize(int _col, int _lines);
 //콘솔 사이즈 
