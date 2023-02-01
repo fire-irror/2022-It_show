@@ -66,10 +66,13 @@ int main() {
 			}
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
-			bullet.x = player.x;
-			bullet.y = player.y - 1;
-			bullet.is_fired = 1;	//화살이 발사 될때
-
+			
+			if (!bullet.is_fired)
+			{
+				bullet.x = player.x;
+				bullet.y = player.y - 1;
+				bullet.is_fired = 1;	//화살이 발사 될때
+			}
 		}
 		if (bullet.is_fired)	//화살 발사 여부
 		{
