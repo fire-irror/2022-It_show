@@ -8,33 +8,63 @@ struct Player {
 	int speed;
 	float x, y;
 	int life;
+	int score;
 };
 
 struct Bullet {
 	int x, y;
 	int is_fired;	//발사 여부
+	int delay;
+};
+
+struct Item {
+	int delay;
+	int is_presented;
+	int presented_time;
 };
 
 const int BULLET_NUM = 50;
 
 int main() {
-
+	
 
 	struct Player player;
 	player.speed = 10;		//TODO: player_speed해결하기.
 	player.x = 60;
 	player.y = 15;
 	player.life = 3;
+	player.score = 0;
 
-	struct Bullet bullet;	//TODO: bullet 여러발 나가도록 구현.
-	bullet.is_fired = 0;
-	bullet.x = 0;
-	bullet.y = 0;
 
+	struct Bullet bullet[BULLET_NUM];	//TODO: bullet 여러발 나가도록 구현.
+	bullet[BULLET_NUM].is_fired = 0; 
+	bullet[BULLET_NUM].x = 0;
+	bullet[BULLET_NUM].y = 0;
+	bullet[BULLET_NUM].delay;
+
+	for (int i = 0; i < BULLET_NUM; i++)
+	{
+		gotoxy(60, 15);
+		bullet[i].is_fired = 0;
+	}
+
+
+	srand(time(NULL));
 
 	long start_time = clock();	// 게임 시작 시간
 	long spent_time;			// 게임 진행 시간
 	int fired_time = 0;
+
+	struct Item item[2];
+	item[0].delay = 25000;
+	item[1].delay = 20000;
+
+	for (int i = 0; i < 2; i++)
+	{
+		item[i].is_presented = 0;
+		item[i].presented_time = 0;
+		printf("★");
+	}
 
 	while (1) {
 
@@ -67,21 +97,21 @@ int main() {
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
 			
-			if (!bullet.is_fired)
+			if (!bullet[BULLET_NUM].is_fired)	//화살이 발사 되지 않을 때 
 			{
-				bullet.x = player.x;
-				bullet.y = player.y - 1;
-				bullet.is_fired = 1;	//화살이 발사 될때
+				bullet[BULLET_NUM].x = player.x;
+				bullet[BULLET_NUM].y = player.y - 1;
+				bullet[BULLET_NUM].is_fired = 1;	//화살이 발사 될때
 			}
 		}
-		if (bullet.is_fired)	//화살 발사 여부
+		if (bullet[BULLET_NUM].is_fired)	//화살 발사 여부
 		{
-			gotoxy(bullet.x, bullet.y);
+			gotoxy(bullet[BULLET_NUM].x, bullet[BULLET_NUM].y);
 			printf("▲");
-			bullet.y--;
-			if (bullet.y < 0)
+			bullet[BULLET_NUM].y--;
+			if (bullet[BULLET_NUM].y < 0)
 			{
-				bullet.is_fired = 0;
+				bullet[BULLET_NUM].is_fired = 0;
 			}
 		}
 		gotoxy(player.x, player.y);
