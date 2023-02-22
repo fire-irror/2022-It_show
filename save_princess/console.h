@@ -14,3 +14,7 @@ void SetColor(unsigned char _BgColor, unsigned char _TextColor);
 
 void SetConsoleSize(int _col, int _lines);
 //콘솔 사이즈 
+
+void clearScreen() {
+    system("cls");
+}

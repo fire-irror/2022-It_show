@@ -3,11 +3,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include "console.h"
+# include "console.c"
 
 #define WIDTH 130
 #define HEIGHT 30
 #define MAX_STARS 50
+#define MAX_BULLETS 50
 
+//플레이어
 struct Player {
 	int speed;
 	float x, y;
@@ -15,29 +18,44 @@ struct Player {
 	int score;
 };
 
+
+//총알
 struct Bullet {
 	int x, y;
 	int is_fired;	//발사 여부
 	int delay;
 };
 
+//플레이어 아이템
 struct Item {
 	int delay;
 	int is_presented;
 	int presented_time;
 };
 
+// 적
 struct star {
 	int x;
 	int y;
 	int speed;
 };
 
-struct star stars[MAX_STARS];
+struct Bullet bullets[MAX_BULLETS];
+
+// 총알 여러발 구현
+void makeBullet() {
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		gotoxy(bullets[i].x, bullets[i].y);
+		bullets[i].is_fired= 0;
+	}
+
+}
+//struct star stars[MAX_STARS];
 
 
-//별들의 초기 위치와 속도 초기화
-void makeStars() {
+//적들의 초기 위치와 속도 초기화
+/*void makeStars() {
 	int i;
 	for (i = 0; i < MAX_STARS; i++) {
 		stars[i].x = rand() % WIDTH;
@@ -45,7 +63,7 @@ void makeStars() {
 		stars[i].speed = rand() % 5 + 1;
 	}
 }
-//별들의 위치 업데이트
+//적들의 위치 업데이트
 void updateStars() {
 	int i;
 	for (i = 0; i < MAX_STARS; i++) {
@@ -57,19 +75,17 @@ void updateStars() {
 		}
 	}
 }
-//별 그리기
-void drawStars() {
+//적 그리기
+/*void drawStars() {
 	int i;
 	for (i = 0; i < MAX_STARS; i++) {
 		gotoxy(stars[i].x, stars[i].y);
 		putchar('*');
 	}
-}
-const int BULLET_NUM = 50;
+}*/
 
 int main() {
 	
-
 	struct Player player;
 	player.speed = 10;		//TODO: player_speed해결하기.
 	player.x = 60;
@@ -84,46 +100,42 @@ int main() {
 	bullet.y = 0;
 	bullet.delay;
 
-	/*for (int i = 0; i < BULLET_NUM; i++)
-	{
-		gotoxy(60, 15);
-		bullet[i].is_fired = 0;
-	}*/
-
 
 	srand(time(NULL));
 
 	long start_time = clock();	// 게임 시작 시간
 	long spent_time;			// 게임 진행 시간
 	int fired_time = 0;
-
-	struct Item item[2];
-	item[0].delay = 25000;
-	item[1].delay = 20000;
-
-	while (1) {
-		//clearScreen();
+	
+	/*while (1) {
+		clearScreen();
 		makeStars();
-		while (1) {
-			//clearScreen();
+		while (1)
+		{
+			clearScreen();
 			updateStars();
 			drawStars();
 			Sleep(500);
 		}
-	}
+	}*/
+
+	/*struct Item item[2];
+	item[0].delay = 25000;
+	item[1].delay = 20000;
+
 
 	for (int i = 0; i < 2; i++)
 	{
 		item[i].is_presented = 0;
 		item[i].presented_time = 0;
 		printf("★");
-	}
+	}*/
 
-	while (1) {
+	while (1) 
+	{
 
-		Clear();
-
-		if (GetAsyncKeyState(VK_LEFT)) {
+		if (GetAsyncKeyState(VK_LEFT)) 
+		{
 			player.x--;
 			if (player.x < 0) {
 				player.x = 0;
@@ -162,14 +174,16 @@ int main() {
 			gotoxy(bullet.x, bullet.y);
 			printf("▲");
 			bullet.y--;
+		
 			if (bullet.y < 0)
 			{
 				bullet.is_fired = 0;
+			
 			}
+			gotoxy(player.x, player.y);
+			printf("■");
+			Sleep(50);
 		}
-		gotoxy(player.x, player.y);
-		printf("■");
-		Sleep(50);
 	}
 
 	system("pause");
