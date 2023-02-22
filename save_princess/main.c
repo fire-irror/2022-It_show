@@ -4,6 +4,10 @@
 #include <time.h>
 #include "console.h"
 
+#define WIDTH 130
+#define HEIGHT 30
+#define MAX_STARS 50
+
 struct Player {
 	int speed;
 	float x, y;
@@ -23,6 +27,44 @@ struct Item {
 	int presented_time;
 };
 
+struct star {
+	int x;
+	int y;
+	int speed;
+};
+
+struct star stars[MAX_STARS];
+
+
+//별들의 초기 위치와 속도 초기화
+void makeStars() {
+	int i;
+	for (i = 0; i < MAX_STARS; i++) {
+		stars[i].x = rand() % WIDTH;
+		stars[i].y = rand() % HEIGHT;
+		stars[i].speed = rand() % 5 + 1;
+	}
+}
+//별들의 위치 업데이트
+void updateStars() {
+	int i;
+	for (i = 0; i < MAX_STARS; i++) {
+		stars[i].y += stars[i].speed;
+		if (stars[i].y >= HEIGHT) {
+			stars[i].x = rand() % WIDTH;
+			stars[i].y = 0;
+			stars[i].speed = rand() % 5 + 1;
+		}
+	}
+}
+//별 그리기
+void drawStars() {
+	int i;
+	for (i = 0; i < MAX_STARS; i++) {
+		gotoxy(stars[i].x, stars[i].y);
+		putchar('*');
+	}
+}
 const int BULLET_NUM = 50;
 
 int main() {
@@ -36,17 +78,17 @@ int main() {
 	player.score = 0;
 
 
-	struct Bullet bullet[BULLET_NUM];	//TODO: bullet 여러발 나가도록 구현.
-	bullet[BULLET_NUM].is_fired = 0; 
-	bullet[BULLET_NUM].x = 0;
-	bullet[BULLET_NUM].y = 0;
-	bullet[BULLET_NUM].delay;
+	struct Bullet bullet;	//TODO: bullet 여러발 나가도록 구현.
+	bullet.is_fired = 0; 
+	bullet.x = 0;
+	bullet.y = 0;
+	bullet.delay;
 
-	for (int i = 0; i < BULLET_NUM; i++)
+	/*for (int i = 0; i < BULLET_NUM; i++)
 	{
 		gotoxy(60, 15);
 		bullet[i].is_fired = 0;
-	}
+	}*/
 
 
 	srand(time(NULL));
@@ -58,6 +100,17 @@ int main() {
 	struct Item item[2];
 	item[0].delay = 25000;
 	item[1].delay = 20000;
+
+	while (1) {
+		//clearScreen();
+		makeStars();
+		while (1) {
+			//clearScreen();
+			updateStars();
+			drawStars();
+			Sleep(500);
+		}
+	}
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -97,21 +150,21 @@ int main() {
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
 			
-			if (!bullet[BULLET_NUM].is_fired)	//화살이 발사 되지 않을 때 
+			if (!bullet.is_fired)	//화살이 발사 되지 않을 때 
 			{
-				bullet[BULLET_NUM].x = player.x;
-				bullet[BULLET_NUM].y = player.y - 1;
-				bullet[BULLET_NUM].is_fired = 1;	//화살이 발사 될때
+				bullet.x = player.x;
+				bullet.y = player.y - 1;
+				bullet.is_fired = 1;	//화살이 발사 될때
 			}
 		}
-		if (bullet[BULLET_NUM].is_fired)	//화살 발사 여부
+		if (bullet.is_fired)	//화살 발사 여부
 		{
-			gotoxy(bullet[BULLET_NUM].x, bullet[BULLET_NUM].y);
+			gotoxy(bullet.x, bullet.y);
 			printf("▲");
-			bullet[BULLET_NUM].y--;
-			if (bullet[BULLET_NUM].y < 0)
+			bullet.y--;
+			if (bullet.y < 0)
 			{
-				bullet[BULLET_NUM].is_fired = 0;
+				bullet.is_fired = 0;
 			}
 		}
 		gotoxy(player.x, player.y);
@@ -122,3 +175,4 @@ int main() {
 	system("pause");
 	return 0;
 }
+
